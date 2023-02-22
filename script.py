@@ -45,24 +45,24 @@ def find_num_tokens(path):
     output = read_text_file(path)
     return len(output)//4
 
-def break_into_chunks(path): 
-    num_tokens = find_num_tokens(path)
-    text_file_output = read_text_file(path)
-    output = [text_file_output[i:i+2000] for i in range(0, 5)]
-    return output
+# def break_into_chunks(path): 
+#     num_tokens = find_num_tokens(path)
+#     text_file_output = read_text_file(path)
+#     output = [text_file_output[i:i+2000] for i in range(0, 5)]
+#     return output
 
 def main():
-    print('Downloading Youtube Video')
     # download youtube audio using yt-dlp
+    print('Downloading Youtube Video')
     youtube_audio_uuid = download_youtube('https://www.youtube.com/clip/UgkxmZ_575WLr_y6dkXJ60F9U2a310aB63D6')
     
-    print('Converting Video to Transcript')
     # convert to transcript using whisper
+    print('Converting Video to Transcript')
     whisper_audio_path = download_whisper(youtube_audio_uuid)
+    
     # use chat-gpt to summarize the whisper output
-
     print('Summarizing transcript:')
     make_summarization(f'./whisper-downloads/{youtube_audio_uuid}/{youtube_audio_uuid}.mp3.txt', youtube_audio_uuid)
-    # make_summarization('./whisper-downloads/E999710D-DA51-4585-93F2-97F7004C2D17/E999710D-DA51-4585-93F2-97F7004C2D17.mp3.txt', 'E999710D-DA51-4585-93F2-97F7004C2D17')
+
 if __name__ == "__main__":
     main()
