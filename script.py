@@ -19,6 +19,7 @@ def make_summarization(path, uuid):
     text_output = read_text_file(path)
 
     output_summarize_path = f"./summarize/{uuid}.txt"
+    # Uncomment line under to store summarization to a file
     # sys.stdout = open(output_summarize_path, 'a+')
 
     openai.api_key=""
@@ -41,9 +42,9 @@ def create_text_file(path):
     f = open(path, "a+")
     return f
 
-def find_num_tokens(path): 
-    output = read_text_file(path)
-    return len(output)//4
+# def find_num_tokens(path): 
+#     output = read_text_file(path)
+#     return len(output)//4
 
 # def break_into_chunks(path): 
 #     num_tokens = find_num_tokens(path)
@@ -59,7 +60,7 @@ def main():
     # convert to transcript using whisper
     print('Converting Video to Transcript')
     whisper_audio_path = download_whisper(youtube_audio_uuid)
-    
+
     # use chat-gpt to summarize the whisper output
     print('Summarizing transcript:')
     make_summarization(f'./whisper-downloads/{youtube_audio_uuid}/{youtube_audio_uuid}.mp3.txt', youtube_audio_uuid)
